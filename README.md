@@ -4,36 +4,23 @@ The agent skills I use day to day. Each one is small, does one job, and can be r
 
 ## Install
 
-Pick one method per agent. Installing both gives you every skill twice.
+Each skill installs on its own, so you call it by name (`/skill-finder`), with no plugin prefix.
+
+```bash
+npx skills@latest add chrisbull/skills -g -a claude-code
+```
+
+Drop `-a claude-code` to pick other agents (Codex, Cursor and more). Add `-s <skill-name>` to install only some skills. Update with `npx skills@latest update`.
 
 <details>
-<summary><strong>Claude Code</strong> (plugin, updates itself)</summary>
+<summary><strong>As a Claude Code plugin instead</strong> (updates itself, skills get a <code>chrisbull-skills:</code> prefix)</summary>
 
 ```bash
 claude plugin marketplace add chrisbull/skills
 claude plugin install chrisbull-skills@chrisbull
 ```
 
-</details>
-
-<details>
-<summary><strong>Codex</strong></summary>
-
-```bash
-codex plugin marketplace add chrisbull/skills
-codex plugin add chrisbull-skills@chrisbull
-```
-
-</details>
-
-<details>
-<summary><strong>Any other agent, or editable copies</strong> (manual updates)</summary>
-
-```bash
-npx skills@latest add chrisbull/skills
-```
-
-Update with `npx skills@latest update`.
+Pick one method. Installing both gives you every skill twice.
 
 </details>
 
