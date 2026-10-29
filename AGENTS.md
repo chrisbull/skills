@@ -38,4 +38,4 @@ When one skill depends on another, write an explicit instruction to call the Ski
 
 ## Local install
 
-On this machine, skills are installed by symlink, not the plugin. `scripts/link-skills.sh` symlinks every skill outside `deprecated/` into `~/.claude/skills` and `~/.agents/skills`, so a `git pull` keeps them current. Re-run it after adding, removing, or renaming a skill.
+For working on the skills, install them by symlink rather than the plugin. `scripts/link-skills.sh` symlinks every skill outside `deprecated/` into `~/.claude/skills` and `~/.agents/skills`, so a `git pull` keeps them current. Re-run it after adding, removing, or renaming a skill.
