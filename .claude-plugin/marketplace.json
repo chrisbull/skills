@@ -1,0 +1,21 @@
+{
+  "name": "chrisbull",
+  "owner": {
+    "name": "Chris Bull",
+    "url": "https://github.com/chrisbull"
+  },
+  "description": "Chris Bull's skills, as an installable Claude Code plugin.",
+  "plugins": [
+    {
+      "name": "chrisbull-skills",
+      "source": "./",
+      "description": "Chris Bull's agent skills for engineering work.",
+      "category": "engineering",
+      "keywords": [
+        "skills",
+        "engineering",
+        "agents"
+      ]
+    }
+  ]
+}

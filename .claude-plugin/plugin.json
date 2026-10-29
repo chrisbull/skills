@@ -1,0 +1,21 @@
+{
+  "name": "chrisbull-skills",
+  "version": "0.2.0",
+  "description": "Chris Bull's agent skills: small, composable skills for engineering work.",
+  "author": {
+    "name": "Chris Bull",
+    "url": "https://github.com/chrisbull"
+  },
+  "repository": "https://github.com/chrisbull/skills",
+  "license": "MIT",
+  "keywords": [
+    "skills",
+    "engineering",
+    "agents",
+    "evals"
+  ],
+  "skills": [
+    "./skills/engineering/agent-harness-tuner",
+    "./skills/engineering/skill-finder"
+  ]
+}

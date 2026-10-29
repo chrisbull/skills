@@ -1,0 +1,3 @@
+interface:
+  display_name: "Agent Harness Tuner"
+  short_description: "Tune an agent's role card against its evals"
