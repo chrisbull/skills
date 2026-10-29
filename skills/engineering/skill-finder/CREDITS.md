@@ -1,6 +1,6 @@
 # Credits
 
-`SKILL.md` is copied unchanged from [ckorhonen/claude-skills](https://github.com/ckorhonen/claude-skills/blob/947001b038d62d9993ccad69b5b8f17ca075fb52/skills/skill-finder/SKILL.md) at commit `947001b`, under the MIT License below.
+`SKILL.md` is adapted from [ckorhonen/claude-skills](https://github.com/ckorhonen/claude-skills/blob/947001b038d62d9993ccad69b5b8f17ca075fb52/skills/skill-finder/SKILL.md) at commit `947001b`, under the MIT License below. Change: installs now require the user's explicit approval instead of running automatically.
 
 ```
 MIT License

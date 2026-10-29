@@ -1,6 +1,6 @@
 ---
 name: skill-finder
-description: Proactively discover, install, and create Claude skills for specialized tasks. AUTOMATICALLY activates when encountering niche domains, unfamiliar APIs, specialized knowledge areas, or when user expresses wanting to learn/know something new. Searches the community registry at claude-plugins.dev and auto-installs matching skills. Creates new skills when no match exists. Use when user says "I want to know...", "help me with [specialized domain]", or when you recognize a task requires specialized expertise you don't have.
+description: Proactively discover, install, and create Claude skills for specialized tasks. AUTOMATICALLY activates when encountering niche domains, unfamiliar APIs, specialized knowledge areas, or when user expresses wanting to learn/know something new. Searches the community registry at claude-plugins.dev and offers matching skills for the user to approve before installing. Creates new skills when no match exists. Use when user says "I want to know...", "help me with [specialized domain]", or when you recognize a task requires specialized expertise you don't have.
 ---
 
 # Skill Finder
@@ -89,9 +89,17 @@ Rank by:
 - AND (stars > 500 OR installs > 50)
 - No obvious security concerns
 
-### Phase 4a: Auto-Install (if credible match found)
+### Phase 4a: Ask, then install (if credible match found)
 
-Run the install command:
+Never install without the user's explicit approval. An installed skill becomes instructions you follow, so the user decides what gets in.
+
+1. Show the user the match and ask before running anything:
+
+   > Found `<skill-name>` (`<namespace>`): [description]. [stars] stars, [installs] installs. Source: [rawFileUrl]. Install it to `.claude/skills/`? (y/n)
+
+   If there are close alternatives, list up to two more so the user can pick.
+2. Wait for the answer. Install only on a clear yes. On no, or no answer, carry on with the task without the skill.
+3. On yes, run the install command:
 
 ```bash
 npx claude-plugins skills install <namespace> --local
@@ -101,7 +109,7 @@ Where `<namespace>` is the full namespace from the API (e.g., `@anthropics/claud
 
 The `--local` flag installs to the project's `.claude/skills/` directory.
 
-After installation, inform the user:
+After installation, tell the user:
 
 > I've learned `<skill-name>` - [brief description of capability]. Let me apply this to your task.
 
@@ -173,6 +181,11 @@ Claude thinking:
 - Found: frontend-design with 45k stars
 - High relevance + high quality = credible match
 
+Claude asks:
+"Found frontend-design (@anthropics/claude-code/frontend-design): distinctive, production-grade interfaces. 45k stars. Install it? (y/n)"
+
+User: "y"
+
 Claude action:
 npx claude-plugins skills install @anthropics/claude-code/frontend-design --local
 
@@ -190,6 +203,11 @@ Claude thinking:
 - I should check for existing skills
 - Search: "opensea nft api marketplace"
 - Found: opensea-api with good ratings
+
+Claude asks:
+"Found opensea-api (@creator/skills/opensea-api): OpenSea marketplace API. Install it? (y/n)"
+
+User: "yes"
 
 Claude action:
 npx claude-plugins skills install @creator/skills/opensea-api --local
@@ -239,7 +257,7 @@ Proceed directly with the task without skill search.
 
 ### npx command fails
 
-If `npx claude-plugins` isn't available, fall back to manual installation:
+If `npx claude-plugins` isn't available, fall back to manual installation (the user's earlier approval covers this skill only):
 
 1. Fetch the skill's `rawFileUrl` from the API response
 2. Use WebFetch to get the SKILL.md content
@@ -259,15 +277,16 @@ Prefer:
 2. More specific description
 3. More recent updates (check `updatedAt`)
 
-Install the best match and mention alternatives exist if user wants different approach.
+Offer the best match first and list the alternatives in the same approval question.
 
 ## Quality Checklist
 
-Before auto-installing, verify:
+Before asking to install, verify:
 - [ ] Description clearly matches user's need
 - [ ] No security red flags in description
 - [ ] Reasonable popularity (stars/installs)
 - [ ] Source is from GitHub (trusted platform)
+- [ ] The user said yes to this specific skill
 
 Before creating a skill, verify:
 - [ ] No existing skill covers this

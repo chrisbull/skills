@@ -46,7 +46,7 @@ Full list: [skills/engineering](./skills/engineering/README.md).
 #### Model-invoked
 
 - **[agent-harness-tuner](./skills/engineering/agent-harness-tuner/SKILL.md)**: Tune an agent's role card and skills against its eval suite (reflect, edit, probe, compose), then validate once on a held-out set. Follows the method of Google Research's [Harness²](https://github.com/google-research/harness2).
-- **[skill-finder](./skills/engineering/skill-finder/SKILL.md)**: Search the claude-plugins.dev registry for a skill that fits a niche task and install it, or write a new one when none fits. From [ckorhonen/claude-skills](https://github.com/ckorhonen/claude-skills) (MIT).
+- **[skill-finder](./skills/engineering/skill-finder/SKILL.md)**: Search the claude-plugins.dev registry for a skill that fits a niche task and install it with your approval, or write a new one when none fits. From [ckorhonen/claude-skills](https://github.com/ckorhonen/claude-skills) (MIT).
 
 ## Contributing
 
