@@ -18,6 +18,10 @@ Drop `-a claude-code` to pick other agents (Codex, Cursor and more). Add `-s <sk
 
 Full list: [skills/engineering](./skills/engineering/README.md).
 
+#### User-invoked
+
+- **[crawl4ai-setup](./skills/engineering/crawl4ai-setup/SKILL.md)**: Run a local Crawl4AI Docker server and connect it to Claude Code over MCP.
+
 #### Model-invoked
 
 - **[agent-harness-tuner](./skills/engineering/agent-harness-tuner/SKILL.md)**: Tune an agent's role card and skills against its eval suite (reflect, edit, probe, compose), then validate once on a held-out set. Follows the method of Google Research's [Harness²](https://github.com/google-research/harness2).

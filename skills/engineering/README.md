@@ -4,7 +4,7 @@ Skills for code and agent work.
 
 ## User-invoked
 
-None yet.
+- **[crawl4ai-setup](./crawl4ai-setup/SKILL.md)**: Run a local Crawl4AI Docker server and connect it to Claude Code over MCP.
 
 ## Model-invoked
 

@@ -1,6 +1,6 @@
 {
   "name": "chrisbull-skills",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "Chris Bull's agent skills: small, composable skills for engineering work.",
   "author": {
     "name": "Chris Bull",
@@ -17,6 +17,7 @@
   "skills": [
     "./skills/engineering/agent-harness-tuner",
     "./skills/engineering/continuous-learning",
+    "./skills/engineering/crawl4ai-setup",
     "./skills/engineering/skill-finder"
   ]
 }
