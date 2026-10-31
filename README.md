@@ -21,7 +21,7 @@ Full list: [skills/engineering](./skills/engineering/README.md).
 #### Model-invoked
 
 - **[agent-harness-tuner](./skills/engineering/agent-harness-tuner/SKILL.md)**: Tune an agent's role card and skills against its eval suite (reflect, edit, probe, compose), then validate once on a held-out set. Follows the method of Google Research's [Harness²](https://github.com/google-research/harness2).
-- **[continuous-learning](./skills/engineering/continuous-learning/SKILL.md)**: Capture reusable knowledge from a work session as a new skill, with a dry run and your confirmation before anything is written. From [ckorhonen/claude-skills](https://github.com/ckorhonen/claude-skills) (MIT).
+- **[continuous-learning](./skills/engineering/continuous-learning/SKILL.md)**: Autonomously turn hard-won session knowledge into new skills, saved locally and reported in one line.
 - **[skill-finder](./skills/engineering/skill-finder/SKILL.md)**: Search the claude-plugins.dev registry for a skill that fits a niche task and install it with your approval, or write a new one when none fits. From [ckorhonen/claude-skills](https://github.com/ckorhonen/claude-skills) (MIT).
 
 ## Contributing
