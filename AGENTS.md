@@ -1,6 +1,6 @@
 # Repo rules
 
-This repo holds my agent skills and ships them as one Claude Code plugin (`chrisbull-skills`).
+This repo holds my agent skills and ships them as a Claude Code plugin (`chrisbull-skills`), plus standalone plugins under `plugins/`.
 
 ## Layout
 
@@ -12,6 +12,15 @@ Skills live in bucket folders under `skills/`. Each skill is a folder with a `SK
 - `deprecated/`: retired, not shipped in the plugin
 
 Create a bucket folder (with its own `README.md`) the first time a skill goes in it.
+
+## Standalone plugins
+
+Work that needs more than skills (subagent definitions, hooks) ships as its own plugin under `plugins/<plugin-name>/`, so it can be installed or enabled (for example in a Claude Project) without the rest of `chrisbull-skills`.
+
+- Layout: `.claude-plugin/plugin.json`, a `README.md`, `skills/<skill-name>/SKILL.md` (each with `agents/openai.yaml`, same rules as above), and `agents/<agent-name>.md` for subagents.
+- The manifest's `name` matches the folder. Its `skills` and `agents` arrays list every skill folder and agent file in the plugin.
+- Add the plugin to `.claude-plugin/marketplace.json` with `source: "./plugins/<plugin-name>"`, and list it under **Plugins** in the top-level `README.md`, linked to its `README.md`.
+- Each plugin keeps its own `version`; bump it when it changes behaviour.
 
 ## Adding or changing a skill
 
@@ -38,4 +47,4 @@ When one skill depends on another, write an explicit instruction to call the Ski
 
 ## Local install
 
-For working on the skills, install them by symlink rather than the plugin. `scripts/link-skills.sh` symlinks every skill outside `deprecated/` into `~/.claude/skills` and `~/.agents/skills`, so a `git pull` keeps them current. Re-run it after adding, removing, or renaming a skill.
+For working on the skills, install them by symlink rather than the plugin. `scripts/link-skills.sh` symlinks every skill outside `deprecated/` (plugin skills included) into `~/.claude/skills` and `~/.agents/skills`, and plugin agents into `~/.claude/agents`, so a `git pull` keeps them current. Re-run it after adding, removing, or renaming a skill.

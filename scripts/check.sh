@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Check that the plugin manifest, READMEs and skill folders agree.
+# Check that the plugin manifests, marketplace, READMEs and skill folders agree.
 set -euo pipefail
 
 REPO="$(cd "$(dirname "$0")/.." && pwd)"
@@ -18,24 +18,31 @@ while IFS= read -r path; do
   esac
 done <<< "$manifest"
 
-while IFS= read -r skill_md; do
-  dir="$(dirname "$skill_md")"
-  name="$(basename "$dir")"
-  bucket="$(basename "$(dirname "$dir")")"
+fm_name() { sed -n 's/^name: *"\{0,1\}\([^"]*\)"\{0,1\} *$/\1/p' "$1" | head -1; }
 
-  fm_name="$(sed -n 's/^name: *"\{0,1\}\([^"]*\)"\{0,1\} *$/\1/p' "$skill_md" | head -1)"
-  [ "$fm_name" = "$name" ] || err "$skill_md: frontmatter name '$fm_name' does not match folder '$name'"
+# Frontmatter name, description, openai.yaml and invocation settings agree.
+check_skill_files() {
+  local dir="$1" skill_md="$1/SKILL.md" name yaml user_fm=0 user_yaml=0
+  name="$(basename "$dir")"
+  [ "$(fm_name "$skill_md")" = "$name" ] || err "$skill_md: frontmatter name '$(fm_name "$skill_md")' does not match folder '$name'"
   grep -q '^description:' "$skill_md" || err "$skill_md: missing description"
 
   yaml="$dir/agents/openai.yaml"
   if [ ! -f "$yaml" ]; then
     err "$dir: missing agents/openai.yaml"
-  else
-    user_fm=0; user_yaml=0
-    grep -q '^disable-model-invocation: *true' "$skill_md" && user_fm=1
-    grep -q 'allow_implicit_invocation: *false' "$yaml" && user_yaml=1
-    [ "$user_fm" = "$user_yaml" ] || err "$name: disable-model-invocation and allow_implicit_invocation disagree"
+    return
   fi
+  grep -q '^disable-model-invocation: *true' "$skill_md" && user_fm=1
+  grep -q 'allow_implicit_invocation: *false' "$yaml" && user_yaml=1
+  [ "$user_fm" = "$user_yaml" ] || err "$name: disable-model-invocation and allow_implicit_invocation disagree"
+}
+
+while IFS= read -r skill_md; do
+  dir="$(dirname "$skill_md")"
+  name="$(basename "$dir")"
+  bucket="$(basename "$(dirname "$dir")")"
+
+  check_skill_files "$dir"
 
   grep -q "($name/SKILL.md)\|(./$name/SKILL.md)" "skills/$bucket/README.md" 2>/dev/null \
     || err "$name: not listed in skills/$bucket/README.md"
@@ -51,6 +58,49 @@ while IFS= read -r skill_md; do
       ;;
   esac
 done < <(find ./skills -name SKILL.md | sort)
+
+# Standalone plugins under plugins/<name>/: manifest, files on disk, marketplace and README agree.
+marketplace_sources="$(node -e 'console.log(require("./.claude-plugin/marketplace.json").plugins.map(p => p.source).join("\n"))')"
+for manifest_file in ./plugins/*/.claude-plugin/plugin.json; do
+  [ -f "$manifest_file" ] || continue
+  pdir="$(dirname "$(dirname "$manifest_file")")"
+  pname="$(basename "$pdir")"
+
+  [ "$(node -e 'console.log(require(process.argv[1]).name)' "$manifest_file")" = "$pname" ] \
+    || err "$manifest_file: name does not match folder '$pname'"
+  grep -qx "$pdir" <<< "$marketplace_sources" || err "$pname: missing from marketplace.json"
+  grep -q "($pdir/README.md)\|($pdir)" README.md || err "$pname: not listed in README.md"
+  [ -f "$pdir/README.md" ] || err "$pname: missing README.md"
+
+  listed_skills="$(node -e 'console.log((require(process.argv[1]).skills || []).join("\n"))' "$manifest_file")"
+  while IFS= read -r rel; do
+    [ -n "$rel" ] || continue
+    [ -f "$pdir/$rel/SKILL.md" ] || { err "$pname lists $rel but $rel/SKILL.md is missing"; continue; }
+    check_skill_files "$pdir/${rel#./}"
+  done <<< "$listed_skills"
+  while IFS= read -r skill_md; do
+    rel="./${skill_md#"$pdir"/}"; rel="${rel%/SKILL.md}"
+    grep -qx "$rel" <<< "$listed_skills" || err "$pname: $rel is not in its plugin.json skills"
+  done < <(find "$pdir/skills" -name SKILL.md 2>/dev/null | sort)
+
+  listed_agents="$(node -e 'console.log((require(process.argv[1]).agents || []).join("\n"))' "$manifest_file")"
+  while IFS= read -r rel; do
+    [ -n "$rel" ] || continue
+    agent="$pdir/${rel#./}"
+    [ -f "$agent" ] || { err "$pname lists $rel but it is missing"; continue; }
+    [ "$(fm_name "$agent")" = "$(basename "$agent" .md)" ] || err "$agent: frontmatter name does not match file name"
+    grep -q '^description:' "$agent" || err "$agent: missing description"
+    grep -q '^model:' "$agent" || err "$agent: missing model"
+  done <<< "$listed_agents"
+  for agent in "$pdir"/agents/*.md; do
+    [ -f "$agent" ] || continue
+    grep -qx "./agents/$(basename "$agent")" <<< "$listed_agents" || err "$pname: $agent is not in its plugin.json agents"
+  done
+
+  if command -v claude >/dev/null; then
+    claude plugin validate "$pdir" || fail=1
+  fi
+done
 
 if command -v claude >/dev/null; then
   claude plugin validate . || fail=1

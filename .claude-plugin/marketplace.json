@@ -4,7 +4,7 @@
     "name": "Chris Bull",
     "url": "https://github.com/chrisbull"
   },
-  "description": "Chris Bull's skills, as an installable Claude Code plugin.",
+  "description": "Chris Bull's skills and plugins for Claude Code.",
   "plugins": [
     {
       "name": "chrisbull-skills",
@@ -15,6 +15,18 @@
         "skills",
         "engineering",
         "agents"
+      ]
+    },
+    {
+      "name": "task-router",
+      "source": "./plugins/task-router",
+      "description": "Plan work, route each task to a worker subagent on the right model and effort, review the results. Built for Claude Projects threads.",
+      "category": "engineering",
+      "keywords": [
+        "orchestration",
+        "subagents",
+        "model-routing",
+        "claude-projects"
       ]
     }
   ]

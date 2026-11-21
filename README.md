@@ -28,6 +28,12 @@ Full list: [skills/engineering](./skills/engineering/README.md).
 - **[continuous-learning](./skills/engineering/continuous-learning/SKILL.md)**: Autonomously turn hard-won session knowledge into new skills, saved locally and reported in one line.
 - **[skill-finder](./skills/engineering/skill-finder/SKILL.md)**: Search the claude-plugins.dev registry for a skill that fits a niche task and install it with your approval, or write a new one when none fits. From [ckorhonen/claude-skills](https://github.com/ckorhonen/claude-skills) (MIT).
 
+## Plugins
+
+Standalone Claude Code plugins, each installed on its own from this repo's marketplace (`/plugin install <plugin-name> --marketplace chrisbull/skills`).
+
+- **[task-router](./plugins/task-router/README.md)**: Plans work, sorts it into tasks by kind of difficulty, and hands each one to a worker subagent on the right model (Sonnet, Opus or Fable) and effort, then reviews the results. Built for Claude Projects threads, with a block for the coordinator's project instructions.
+
 ## Contributing
 
 Repo rules for humans and agents are in [AGENTS.md](./AGENTS.md).
