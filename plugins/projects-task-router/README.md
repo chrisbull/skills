@@ -37,9 +37,12 @@ Threads started before the plugin was enabled won't have it. Start a new thread 
 
 The skill starts on its own for multi-step implementation, debugging or refactoring work. You can also run `/projects-task-router <task>`.
 
+A session-start hook adds a one-line pointer to the skill to every session's context. Claude Code cuts skill descriptions when many skills are installed, and a skill whose description was cut never gets matched to a task; the pointer keeps the router reachable either way.
+
 ## What ships
 
 - **Skill** [`projects-task-router`](./SKILL.md) (model-invoked): the router's playbook.
+- **Hook** [`hooks/hooks.json`](./hooks/hooks.json): a `SessionStart` hook that points each session at the skill.
 - **Agents**, one per tier. The router picks the cheapest one that gets the task right the first time:
 
   | Agent | Model / effort | For |

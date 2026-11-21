@@ -1,6 +1,6 @@
 {
   "name": "projects-task-router",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Model routing for Claude Projects threads: plan work, sort it into tasks by kind of difficulty, hand each to a worker subagent on the right model and effort (Opus at low to xhigh, or Fable), then review the results.",
   "author": {
     "name": "Chris Bull",

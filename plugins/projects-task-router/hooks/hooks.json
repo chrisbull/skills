@@ -1,0 +1,16 @@
+{
+  "description": "Point every session at the projects-task-router skill, even when its description is cut from the skill list.",
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "sh \"${CLAUDE_PLUGIN_ROOT}/hooks/session-start.sh\"",
+            "timeout": 5
+          }
+        ]
+      }
+    ]
+  }
+}
