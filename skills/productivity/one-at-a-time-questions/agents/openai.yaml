@@ -1,0 +1,3 @@
+interface:
+  display_name: "One-at-a-time Questions"
+  short_description: "Ask several questions one by one with multiple-choice options"

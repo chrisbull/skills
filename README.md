@@ -110,7 +110,7 @@ Design calls and the final say never leave the router, and every worker report g
 
 ### Skills
 
-Everything in [skills/engineering](./skills/engineering/README.md), included in the `chrisbull-skills` plugin.
+Everything in [skills/engineering](./skills/engineering/README.md) and [skills/productivity](./skills/productivity/README.md), included in the `chrisbull-skills` plugin.
 
 **User-invoked** (you type the name):
 
@@ -121,6 +121,7 @@ Everything in [skills/engineering](./skills/engineering/README.md), included in 
 - **[agent-harness-tuner](./skills/engineering/agent-harness-tuner/SKILL.md)**: Tune an agent's role card and skills against its eval suite, then validate once on a held-out set.
 - **[continuous-learning](./skills/engineering/continuous-learning/SKILL.md)**: Turn hard-won session knowledge into new skills, saved locally and reported in one line.
 - **[skill-finder](./skills/engineering/skill-finder/SKILL.md)**: Find and install a registry skill for a niche task, or write a new one when none fits.
+- **[one-at-a-time-questions](./skills/productivity/one-at-a-time-questions/SKILL.md)**: Ask several questions one by one with lettered options and a recommended pick, then recap.
 
 ### Plugins
 
