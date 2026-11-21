@@ -1,3 +1,3 @@
 interface:
-  display_name: "Task Router"
+  display_name: "Projects Task Router"
   short_description: "Plan work, route each task to a worker on the right model, review the results"

@@ -1,6 +1,6 @@
 ---
 name: worker-frontier
-description: Task-router frontier worker (Fable, high effort). Reserve tier for the hardest problems - subtle algorithms, concurrency, many interacting states, bugs that resisted ordinary or deep debugging - and for a bounded design feature when the user explicitly asks for one. Started by the task-router skill with a self-contained brief.
+description: Projects task router frontier worker (Fable, high effort). Reserve tier for the hardest problems - subtle algorithms, concurrency, many interacting states, bugs that resisted ordinary or deep debugging - and for a bounded design feature when the user explicitly asks for one. Started by the projects-task-router skill with a self-contained brief.
 model: fable
 effort: high
 ---

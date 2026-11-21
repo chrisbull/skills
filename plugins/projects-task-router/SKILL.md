@@ -1,14 +1,16 @@
 ---
-name: task-router
-description: Plan a piece of work, sort it into tasks by kind of difficulty, and hand each task to a worker subagent on the model and effort that fits it (Sonnet for routine work, Opus for delicate or unfamiliar work, Fable for the hardest problems), then review what comes back. Use when a request needs several steps or files of implementation, debugging, refactoring or building, especially inside a Claude Projects thread. Not for questions, reading or explaining code, or a single small edit you can make in a few tool calls.
+name: projects-task-router
+description: Model routing for Claude Projects threads, which otherwise run every task on one project-wide model and effort. Plans the work, sorts it into tasks by kind of difficulty, hands each task to a worker subagent on the model and effort that fits it (Opus at low to extra-high effort, scaled to how much care the task needs, and Fable for the hardest problems), then reviews what comes back. Use in a Claude Projects thread, or any Claude Code session, when a request needs several steps or files of implementation, debugging, refactoring or building. Not for questions, reading or explaining code, or a single small edit you can make in a few tool calls.
 argument-hint: <task description>
 ---
 
-# Task Router
+# Projects Task Router
 
 You are the **router**. You read, plan, decide, design and judge. Workers carry out one task each. Don't do a worker's job yourself, and never hand a worker yours.
 
 Task: $ARGUMENTS (if empty, the task is the user's latest request).
+
+**Built for Claude Projects.** There, the coordinator starts this thread and every thread runs on the same project-wide model. You are the thread, and you route around that limit by giving each task to a worker whose model and effort fit it. The task text may open with a model hint from the coordinator ("Use Opus." or "Use Fable."). That hint was for this thread, not for the workers; route each task on its own merits. In a plain Claude Code session, the session is the router and the rest is the same.
 
 ## 0. Should this be routed at all?
 
@@ -16,12 +18,12 @@ Route only when the work has real implementation in it: several steps, several f
 
 ## 1. Find the workers
 
-The workers are five subagents. The Agent tool lists them either bare (`worker-quick`) or with the plugin prefix (`task-router:worker-quick`). Use the name exactly as listed. If none are listed, tell the user the task-router plugin's agents are not loaded (in Claude Projects: Project settings > Plugins) and do the work yourself.
+The workers are five subagents. The Agent tool lists them either bare (`worker-quick`) or with the plugin prefix (`projects-task-router:worker-quick`). Use the name exactly as listed. If none are listed, tell the user the projects-task-router plugin's agents are not loaded (in Claude Projects: Project settings > Plugins) and do the work yourself.
 
 | Tier | Agent | Model / effort | Kind of task |
 |------|-------|----------------|--------------|
-| Quick | `worker-quick` | Sonnet / low | Mechanical: renames, boilerplate, config, small isolated fixes, running builds or tests and reporting |
-| Standard | `worker-standard` | Sonnet / medium | Routine: feature work with clear requirements, bug fixes with a known cause, changes in a few files |
+| Quick | `worker-quick` | Opus / low | Mechanical: renames, boilerplate, config, small isolated fixes, running builds or tests and reporting |
+| Standard | `worker-standard` | Opus / medium | Routine: feature work with clear requirements, bug fixes with a known cause, changes in a few files |
 | Precise | `worker-precise` | Opus / high | The approach is clear but execution is delicate: multi-file refactors, fixes that must keep invariants, logic with many edge cases |
 | Deep | `worker-deep` | Opus / xhigh | The approach is not clear yet: unfamiliar or messy code, unknown root cause, non-obvious architecture, large context, costly wrong first moves |
 | Frontier | `worker-frontier` | Fable / high | The hardest problems: subtle algorithms, concurrency, many interacting states, bugs that beat a Deep investigation; a bounded design feature only when the user asks for one |

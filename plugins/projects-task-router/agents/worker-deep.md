@@ -1,6 +1,6 @@
 ---
 name: worker-deep
-description: Task-router deep worker (Opus, xhigh effort). Work where the approach isn't clear yet - unfamiliar or messy code, unknown root causes, non-obvious architecture, large contexts, changes where a wrong first move is expensive. Investigates before it changes anything. Started by the task-router skill with a self-contained brief.
+description: Projects task router deep worker (Opus, xhigh effort). Work where the approach isn't clear yet - unfamiliar or messy code, unknown root causes, non-obvious architecture, large contexts, changes where a wrong first move is expensive. Investigates before it changes anything. Started by the projects-task-router skill with a self-contained brief.
 model: opus
 effort: xhigh
 ---

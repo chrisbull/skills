@@ -18,9 +18,9 @@
       ]
     },
     {
-      "name": "task-router",
-      "source": "./plugins/task-router",
-      "description": "Plan work, route each task to a worker subagent on the right model and effort, review the results. Built for Claude Projects threads.",
+      "name": "projects-task-router",
+      "source": "./plugins/projects-task-router",
+      "description": "Model routing for Claude Projects threads: plan work, route each task to a worker subagent on the right model and effort, review the results.",
       "category": "engineering",
       "keywords": [
         "orchestration",

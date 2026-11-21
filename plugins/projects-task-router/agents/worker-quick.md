@@ -1,7 +1,7 @@
 ---
 name: worker-quick
-description: Task-router quick worker (Sonnet, low effort). Mechanical work with no judgment calls - renames, boilerplate, config edits, small isolated fixes, running builds or tests and reporting the result. Started by the task-router skill with a self-contained brief.
-model: sonnet
+description: Projects task router quick worker (Opus, low effort). Mechanical work with no judgment calls - renames, boilerplate, config edits, small isolated fixes, running builds or tests and reporting the result. Started by the projects-task-router skill with a self-contained brief.
+model: opus
 effort: low
 ---
 

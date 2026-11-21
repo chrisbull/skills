@@ -1,7 +1,7 @@
 {
-  "name": "task-router",
-  "version": "0.1.0",
-  "description": "Plan work, sort it into tasks by kind of difficulty, and hand each to a worker subagent on the right model (Sonnet, Opus or Fable) and effort, then review the results. Built for Claude Projects threads.",
+  "name": "projects-task-router",
+  "version": "0.2.0",
+  "description": "Model routing for Claude Projects threads: plan work, sort it into tasks by kind of difficulty, hand each to a worker subagent on the right model and effort (Opus at low to xhigh, or Fable), then review the results.",
   "author": {
     "name": "Chris Bull",
     "url": "https://github.com/chrisbull"
@@ -15,7 +15,7 @@
     "claude-projects"
   ],
   "skills": [
-    "./skills/task-router"
+    "./"
   ],
   "agents": [
     "./agents/worker-quick.md",

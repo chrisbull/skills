@@ -17,7 +17,7 @@ Create a bucket folder (with its own `README.md`) the first time a skill goes in
 
 Work that needs more than skills (subagent definitions, hooks) ships as its own plugin under `plugins/<plugin-name>/`, so it can be installed or enabled (for example in a Claude Project) without the rest of `chrisbull-skills`.
 
-- Layout: `.claude-plugin/plugin.json`, a `README.md`, `skills/<skill-name>/SKILL.md` (each with `agents/openai.yaml`, same rules as above), and `agents/<agent-name>.md` for subagents.
+- Layout: `.claude-plugin/plugin.json`, a `README.md`, `agents/<agent-name>.md` for subagents, and skills. A plugin with one skill keeps it at the plugin root (`SKILL.md`, `agents/openai.yaml`, manifest `"skills": ["./"]`), so its skill name matches the plugin folder and skillshare can link the whole plugin as one skill folder, which Claude Code loads as `<name>@skills-dir`. A plugin with several skills uses `skills/<skill-name>/SKILL.md`. Each skill follows the same rules as above.
 - The manifest's `name` matches the folder. Its `skills` and `agents` arrays list every skill folder and agent file in the plugin.
 - Add the plugin to `.claude-plugin/marketplace.json` with `source: "./plugins/<plugin-name>"`, and list it under **Plugins** in the top-level `README.md`, linked to its `README.md`.
 - Each plugin keeps its own `version`; bump it when it changes behaviour.
@@ -47,4 +47,4 @@ When one skill depends on another, write an explicit instruction to call the Ski
 
 ## Local install
 
-For working on the skills, install them by symlink rather than the plugin. `scripts/link-skills.sh` symlinks every skill outside `deprecated/` (plugin skills included) into `~/.claude/skills` and `~/.agents/skills`, and plugin agents into `~/.claude/agents`, so a `git pull` keeps them current. Re-run it after adding, removing, or renaming a skill.
+Install through skillshare, which shares skills with the other Mac. Here, skillshare's source holds `_chrisbull` as a symlink to this checkout (`skillshare link ~/projects/skills --name _chrisbull --enable`), so uncommitted edits load in the next session without a commit. Its tracked-repo record in skillshare's `.metadata.json` makes other machines clone `chrisbull/skills` instead (`skillshare pull`, then `skillshare install`). Run `skillshare sync` after adding, removing, or renaming a skill. Don't write symlinks into `~/.claude/skills` or `~/.agents/skills` by hand, and don't use `npx skills`: skillshare treats both as unmanaged.

@@ -72,16 +72,22 @@ for manifest_file in ./plugins/*/.claude-plugin/plugin.json; do
   grep -q "($pdir/README.md)\|($pdir)" README.md || err "$pname: not listed in README.md"
   [ -f "$pdir/README.md" ] || err "$pname: missing README.md"
 
-  listed_skills="$(node -e 'console.log((require(process.argv[1]).skills || []).join("\n"))' "$manifest_file")"
+  # Skill paths normalised to "." (plugin root) or "./sub/dir", no trailing slash.
+  listed_skills="$(node -e '
+    const s = require(process.argv[1]).skills || [];
+    console.log(s.map(p => p.replace(/\/+$/, "") || ".").join("\n"));
+  ' "$manifest_file")"
   while IFS= read -r rel; do
     [ -n "$rel" ] || continue
-    [ -f "$pdir/$rel/SKILL.md" ] || { err "$pname lists $rel but $rel/SKILL.md is missing"; continue; }
-    check_skill_files "$pdir/${rel#./}"
+    sdir="$pdir/${rel#./}"; [ "$rel" = "." ] && sdir="$pdir"
+    [ -f "$sdir/SKILL.md" ] || { err "$pname lists $rel but $rel/SKILL.md is missing"; continue; }
+    check_skill_files "$sdir"
   done <<< "$listed_skills"
   while IFS= read -r skill_md; do
-    rel="./${skill_md#"$pdir"/}"; rel="${rel%/SKILL.md}"
+    rel="$(dirname "$skill_md")"
+    if [ "$rel" = "$pdir" ]; then rel="."; else rel="./${rel#"$pdir"/}"; fi
     grep -qx "$rel" <<< "$listed_skills" || err "$pname: $rel is not in its plugin.json skills"
-  done < <(find "$pdir/skills" -name SKILL.md 2>/dev/null | sort)
+  done < <(find "$pdir" -name SKILL.md | sort)
 
   listed_agents="$(node -e 'console.log((require(process.argv[1]).agents || []).join("\n"))' "$manifest_file")"
   while IFS= read -r rel; do
