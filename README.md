@@ -24,7 +24,8 @@ Pick one route per agent. Installing two routes gives you every skill twice.
 <summary><strong>Claude Code</strong></summary>
 
 ```text
-/plugin install chrisbull-skills --marketplace chrisbull/skills
+/plugin marketplace add chrisbull/skills
+/plugin install chrisbull-skills@chrisbull
 ```
 
 The plugin keeps itself up to date. Skills show up namespaced, like `/chrisbull-skills:crawl4ai-setup`.
@@ -101,7 +102,8 @@ Max effort on a rename. Low effort on a race condition. Either way you pay for i
 Design calls and the final say never leave the router, and every worker report gets checked against the diff. It's built for [Claude Projects](https://code.claude.com/docs/en/claude-projects), where every thread otherwise runs on one project-wide model and effort. It also ships a block for the coordinator's project instructions, so new threads start on the right model too.
 
 ```text
-/plugin install projects-task-router --marketplace chrisbull/skills
+/plugin marketplace add chrisbull/skills
+/plugin install projects-task-router@chrisbull
 ```
 
 ## The full list
@@ -122,7 +124,7 @@ Everything in [skills/engineering](./skills/engineering/README.md), included in 
 
 ### Plugins
 
-Standalone, so you can install or enable one without the rest (`/plugin install <plugin-name> --marketplace chrisbull/skills`).
+Standalone, so you can install or enable one without the rest (`/plugin install <plugin-name>@chrisbull`, after `/plugin marketplace add chrisbull/skills`).
 
 - **[projects-task-router](./plugins/projects-task-router/README.md)**: Model routing for Claude Projects. Route each task to a worker subagent on the right model and effort (Opus at low to xhigh, or Fable), then review the results.
 

@@ -31,7 +31,8 @@ Threads started before the plugin was enabled won't have it. Start a new thread 
 ## Use it in Claude Code
 
 ```text
-/plugin install projects-task-router --marketplace chrisbull/skills
+/plugin marketplace add chrisbull/skills
+/plugin install projects-task-router@chrisbull
 ```
 
 The skill starts on its own for multi-step implementation, debugging or refactoring work. You can also run `/projects-task-router <task>`.
